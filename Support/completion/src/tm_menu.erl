@@ -4,8 +4,9 @@
 
 selection([]) -> "";
 selection(MenuItems) ->
-    %% TODO: need better way to get path for tm_dialog
-    PlistXml = os:cmd(io_lib:format("/Users/rajiv/My\\\ Apps/TextMate/TextMate.app/Contents/PlugIns/Dialog.tmplugin/Contents/Resources/tm_dialog -u -p \"~s\"", [ascii_plist(MenuItems)])),
+    % Just in case there are any spaces in the path to tm_dialog
+    Dialog = re:replace(os:getenv("DIALOG_1"), "\s", "\\\\ ", [{return, list}]),
+    PlistXml = os:cmd(string:concat(Dialog, io_lib:format(" -u -p \"~s\"", [ascii_plist(MenuItems)]))),
     {PlistDoc, _Rest} = xmerl_scan:string(PlistXml),
     selected( xmerl_xpath:string("/plist/dict/dict[preceding-sibling::key[1]='selectedMenuItem']/string[preceding-sibling::key[1]='title']/text()", PlistDoc)).
 

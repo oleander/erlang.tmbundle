@@ -24,7 +24,6 @@ TODO
 ----
 
 *   Add ebin's in `TM_PROJECT_DIRECTORY` to Erlang's code_path for autocompletion
-*   In `Support/completion/src/tm_menu.erl`, find a better way to get the path to `tm_dialog`
 
 CREDITS
 -------
